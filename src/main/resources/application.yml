@@ -18,3 +18,8 @@ server:
   error:
     include-message: always
   shutdown: "graceful"
+
+openweathermap:
+  api:
+    key: f6b9dc9f856b4ab946f4acb7314857a1
+    url: https://api.openweathermap.org/data/2.5

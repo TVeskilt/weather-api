@@ -14,9 +14,8 @@ public class CityTemperature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-
     @Column(unique = true)
     private String cityName;
-
-    private String temperature;
+    private Double temperature;
+    private String openWeatherMapId;
 }
