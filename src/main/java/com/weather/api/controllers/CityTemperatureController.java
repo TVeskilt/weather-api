@@ -23,12 +23,17 @@ public class CityTemperatureController {
     @GetMapping
     public ResponseEntity<Page<CityTemperature>> getCityTemperatures(
         @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "5") int size,
-        @RequestParam(defaultValue = "cityName") String sortBy) {
+        @RequestParam(defaultValue = "5") int pageSize,
+        @RequestParam(defaultValue = "cityName") String sortBy,
+        @RequestParam(defaultValue = "asc") String direction) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Sort sort = direction.equalsIgnoreCase("desc") ?
+            Sort.by(sortBy).descending() :
+            Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         Page<CityTemperature> pagedResult = cityTemperatureService.getCityTemperatures(pageable);
+
         return ResponseEntity.ok(pagedResult);
     }
-
 }
