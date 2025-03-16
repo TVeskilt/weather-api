@@ -35,15 +35,11 @@ public class OpenWeatherMapService {
             JsonNode response = restTemplate.getForObject(url, JsonNode.class);
 
             if (response != null && response.has("main") && response.get("main").has("temp")) {
-                double temperature = response.get("main").get("temp").asDouble();
-                logger.info("Retrieved temperature for city ID {}: {}°C", cityId, temperature);
-                return temperature;
+                return response.get("main").get("temp").asDouble();
             } else {
-                logger.error("Invalid response format for city ID: {}", cityId);
                 return null;
             }
         } catch (Exception e) {
-            logger.error("Error fetching temperature for city ID {}: {}", cityId, e.getMessage());
             throw e;
         }
     }

@@ -1,10 +1,9 @@
 package com.weather.api.config;
 
 import com.weather.api.models.CityTemperature;
+import com.weather.api.scheduler.TemperatureUpdateScheduler;
 import com.weather.api.services.CityTemperatureService;
-import lombok.Getter;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,17 +16,17 @@ import java.util.Map;
 @Configuration
 public class DataLoader {
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final TemperatureUpdateScheduler temperatureUpdateScheduler;
 
-    public DataLoader(ApplicationEventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
+    public DataLoader(TemperatureUpdateScheduler temperatureUpdateScheduler) {
+        this.temperatureUpdateScheduler = temperatureUpdateScheduler;
     }
 
     @Bean
     CommandLineRunner initDatabase(CityTemperatureService cityTemperatureService) {
         return args -> {
             loadCityData(cityTemperatureService);
-            eventPublisher.publishEvent(new DataLoadCompletedEvent(this));
+            temperatureUpdateScheduler.updateWeatherData();
         };
     }
 
@@ -71,15 +70,5 @@ public class DataLoader {
 
         cityTemperatureService.createCityTemperatures(cityTemperatures);
         System.out.println("Entered " + cityTemperatures.size() + " cities");
-    }
-
-    @Getter
-    public static class DataLoadCompletedEvent {
-        private final Object source;
-
-        public DataLoadCompletedEvent(Object source) {
-            this.source = source;
-        }
-
     }
 }
