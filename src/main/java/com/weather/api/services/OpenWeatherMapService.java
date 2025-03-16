@@ -44,7 +44,7 @@ public class OpenWeatherMapService {
             }
         } catch (Exception e) {
             logger.error("Error fetching temperature for city ID {}: {}", cityId, e.getMessage());
-            throw e; // Let @Retryable handle the retry
+            throw e;
         }
     }
 }

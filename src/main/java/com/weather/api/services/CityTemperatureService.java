@@ -24,8 +24,8 @@ public class CityTemperatureService {
         return cityTemperatureRepository.findAll();
     }
 
-    public void createCityTemperature(CityTemperature ct) {
-        cityTemperatureRepository.save(ct);
+    public void createCityTemperatures(List<CityTemperature> cts) {
+        cityTemperatureRepository.saveAll(cts);
     }
 
     public void updateTemperature(CityTemperature cityTemp, Double newTemperature) {

@@ -69,11 +69,8 @@ public class DataLoader {
             cityTemperatures.add(cityTemp);
         }
 
-        // Save all cities in one batch TODO check if possible to bulk add
-        for (CityTemperature cityTemperature : cityTemperatures) {
-            cityTemperatureService.createCityTemperature(cityTemperature);
-        }
-        System.out.println("Loaded " + cityTemperatures.size() + " cities");
+        cityTemperatureService.createCityTemperatures(cityTemperatures);
+        System.out.println("Entered " + cityTemperatures.size() + " cities");
     }
 
     @Getter
